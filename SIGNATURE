@@ -1,0 +1,40 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.73.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 c1b33946c1b57f62706f96bdaf30749068c9c6f9 Build.PL
+SHA1 315183db0f1b1acb50414b6929bf78cade3f2a97 Changes
+SHA1 24e53a99ecc4a1d7d29884f1ef651ea8336abe76 MANIFEST
+SHA1 5f29cdcbfacb9c46ac155fff9844aceeb064aef1 MANIFEST.SKIP
+SHA1 11b52df386d622bb2b85ca763433b3d4a68549ff Makefile.PL
+SHA1 cd561c674b0349bacda740b20e364b02a3173784 README
+SHA1 ad3ed5b74cd4a52f68e2fa643a7147dd5d5ed821 lib/WWW/Google/PageSpeedOnline.pm
+SHA1 6a6fe43bd5e9a95a4911ab127c1a8c2165200c7f lib/WWW/Google/PageSpeedOnline/Advise.pm
+SHA1 5c3324ea70f89e236cbc9a4c335a46230ccf8ca0 lib/WWW/Google/PageSpeedOnline/Result.pm
+SHA1 91c3760bb1819ea8071a751b4a5ea38d8eb3b80e lib/WWW/Google/PageSpeedOnline/Stats.pm
+SHA1 6727c3e7125334a8d1b6b5a638389e284d00ccde t/00-load.t
+SHA1 3e86d3e277d4233e55b8a4555bf6edf2dcdf7bd0 t/manifest.t
+SHA1 a572bbed348e70b106f01fa02fee8b8edd6735d5 t/pod.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJT0o3wAAoJENoXJXWo7C/pRHQH/0tbHyG52DqS2KR76rQoQdCR
+L+a09EO6h50RaoiqKIY6n4X3jLmKp6VlNcladgTXKZA/Gmin9C399CiMRy1raoWh
+woS9kvRe0tlFxlRe0V4baqje02RWX30QipzdU24aIdg0PhYu6QWLBDmtZXHfTU6m
+IkFGjrH23u3Sajt5LwAV1l2qy0AjKUQMdcTv1cnL8EUYe4IuwP5fJu1Rg8p6i+qo
+eTCt3u/dTS+R+LRWmCyFZFDdPI3BgxszZ5Hn9kyEDZVUjwn5Df9XQj/N5JZgQsdm
+sLv5NQS+FdgrAizfJYj++CNvj/5ImgdibNBhnKL6fBqnPPe+/TCtBZzEQrFCu34=
+=VqGe
+-----END PGP SIGNATURE-----

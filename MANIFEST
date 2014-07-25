@@ -1,0 +1,14 @@
+Build.PL
+Changes
+lib/WWW/Google/PageSpeedOnline.pm
+lib/WWW/Google/PageSpeedOnline/Advise.pm
+lib/WWW/Google/PageSpeedOnline/Result.pm
+lib/WWW/Google/PageSpeedOnline/Stats.pm
+Makefile.PL
+MANIFEST
+MANIFEST.SKIP
+SIGNATURE
+README
+t/00-load.t
+t/manifest.t
+t/pod.t
