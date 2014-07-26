@@ -46,7 +46,7 @@ my $LOCALES = {
     'lt'    => 'Lithuanian',            'no'    => 'Norwegian', 'pl'    => 'Polish',     'pr_BR' => 'Portuguese (Brazilian)',
     'pt_PT' => 'Portuguese (Portugal)', 'ro'    => 'Romanian',  'ru'    => 'Russian',    'sr'    => 'Serbian',
     'sk'    => 'Slovakian',             'sl'    => 'Slovenian', 'es'    => 'Spanish',    'sv'    => 'Swedish',
-    'th'    => 'Thai'                   'tr'    => 'Turkish',   'uk'    => 'Ukrainian',  'vi'    => 'Vietnamese',
+    'th'    => 'Thai',                  'tr'    => 'Turkish',   'uk'    => 'Ukrainian',  'vi'    => 'Vietnamese',
 };
 
 our $Strategy = sub {
@@ -78,7 +78,7 @@ sub check_rule {
     die "ERROR: 'Rules' should be passed in as arrayref" unless (ref($rules) eq 'ARRAY');
 
     foreach my $rule (@$rules) {
-        die "ERROR: Invalid 'rule' found [$rule]" unless (exisis $RULE->{uc($rule)});
+        die "ERROR: Invalid 'rule' found [$rule]" unless (exisis $RULES->{uc($rule)});
     }
 }
 
@@ -106,8 +106,8 @@ sub validate {
         die "ERROR: Received undefined mandatory param: $key"
             if ($fields->{$key} && !defined $params->{$key});
 
-	$FIELDS->{$field}->{check}->($values->{$field})
-            if defined $values->{$field};
+	$FIELDS->{$key}->{check}->($params->{$key})
+            if defined $params->{$key};
     }
 }
 

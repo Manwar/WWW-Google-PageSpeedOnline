@@ -35,7 +35,7 @@ has stats       => (is => 'rw');
 has result      => (is => 'rw');
 has advise      => (is => 'rw');
 
-our $BASE_URL   => "https://www.googleapis.com/pagespeedonline/v1/runPagespeed";
+our $BASE_URL   = 'https://www.googleapis.com/pagespeedonline/v1/runPagespeed';
 
 =head1 DESCRIPTION
 
@@ -237,11 +237,11 @@ sub _advise {
     foreach my $rule (@{$result}) {
         next unless exists $result->{$rule}->{urlBlocks};
 
-        foreach $block (@{$result->{$rule}->{urlBlocks}}) {
+        foreach my $block (@{$result->{$rule}->{urlBlocks}}) {
             my $header = _format($block->{header}->{format}, $block->{header}->{args});
             my $items  = [];
-            if (exists($block->{urls}) && (scalar(@{$block->{urls}}))) {
-                foreach $url (@{$block->{urls}}) {
+            if (exixsts($block->{urls}) && (scalar(@{$block->{urls}}))) {
+                foreach my $url (@{$block->{urls}}) {
                     push @$items, _format($url->{result}->{format}, $url->{result}->{args});
                 }
             }
