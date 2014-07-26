@@ -1,6 +1,6 @@
-package WWW::Google::PageSpeedOnline::Result;
+package WWW::Google::PageSpeedOnline::Result::Rule;
 
-$WWW::Google::PageSpeedOnline::Result::VERSION = '0.09';
+$WWW::Google::PageSpeedOnline::Result::Rule::VERSION = '0.09';
 
 use 5.006;
 
@@ -9,7 +9,7 @@ use namespace::clean;
 
 =head1 NAME
 
-WWW::Google::PageSpeedOnline::Result - Placeholder for the result of WWW::Google::PageSpeedOnline
+WWW::Google::PageSpeedOnline::Result::Rule - Placeholder for the result rule of WWW::Google::PageSpeedOnline
 
 =head1 VERSION
 
@@ -17,10 +17,9 @@ Version 0.09
 
 =cut
 
-has id    => (is => 'ro');
-has title => (is => 'ro');
-has score => (is => 'ro');
-has rules => (is => 'ro');
+has localizedRuleName => (is => 'ro');
+has ruleImpact        => (is => 'ro');
+has ruleScore         => (is => 'ro');
 
 =head1 AUTHOR
 
@@ -37,7 +36,7 @@ I will be notified, and then you'll automatically be notified of progress on you
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc WWW::Google::PageSpeedOnline::Result
+    perldoc WWW::Google::PageSpeedOnline::Result::Rule
 
 You can also look for information at:
 
@@ -101,4 +100,4 @@ OF THE PACKAGE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =cut
 
-1; # End of WWW::Google::PageSpeedOnline::Result
+1; # End of WWW::Google::PageSpeedOnline::Result::Rule

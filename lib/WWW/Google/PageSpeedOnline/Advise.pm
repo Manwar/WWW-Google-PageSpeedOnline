@@ -15,6 +15,12 @@ WWW::Google::PageSpeedOnline::Advise - Placeholder for the advise of WWW::Google
 
 Version 0.09
 
+=cut
+
+has id     => (is => 'ro');
+has header => (is => 'ro');
+has items  => (is => 'ro');
+
 =head1 AUTHOR
 
 Mohammad S Anwar, C<< <mohammad.anwar at yahoo.com> >>

@@ -3,9 +3,19 @@ package WWW::Google::PageSpeedOnline;
 $WWW::Google::PageSpeedOnline::VERSION = '0.09';
 
 use 5.006;
+use JSON;
+use Data::Dumper;
+
+use WWW::Google::UserAgent;
+use WWW::Google::DataTypes qw($TrueOrFalse);
+use WWW::Google::PageSpeedOnline::Params qw(validate $Strategy $Locale $FIELDS);
+use WWW::Google::PageSpeedOnline::Stats;
+use WWW::Google::PageSpeedOnline::Result;
+use WWW::Google::PageSpeedOnline::Advise;
 
 use Moo;
 use namespace::clean;
+extends 'WWW::Google::UserAgent';
 
 =head1 NAME
 
@@ -16,6 +26,16 @@ WWW::Google::PageSpeedOnline - Interface to Google Page Speed Online API.
 Version 0.09
 
 =cut
+
+has prettyprint => (is => 'ro', isa => $TrueOrFalse, default => sub { return 'true'    });
+has strategy    => (is => 'ro', isa => $Strategy,    default => sub { return 'desktop' });
+has locale      => (is => 'ro', isa => $Locale,      default => sub { return 'en_US'   });
+
+has stats       => (is => 'rw');
+has result      => (is => 'rw');
+has advise      => (is => 'rw');
+
+our $BASE_URL   => "https://www.googleapis.com/pagespeedonline/v1/runPagespeed";
 
 =head1 DESCRIPTION
 
@@ -166,6 +186,88 @@ then you would have to pass as hashref like:
 
 =cut
 
+sub process {
+    my ($self, $values) = @_;
+
+    my $response = $self->_process($values);
+
+    $self->{stats}  = $self->_stats($response);
+    $self->{result} = $self->_result($response);
+    $self->{advise} = $self->_advise($response);
+}
+
+sub _process {
+    my ($self, $values) = @_;
+
+    my $params   = { url => 1, strategy => 0, locale => 0 };
+    my $url      = $self->_url($params, $values);
+    my $response = $self->get($url);
+    my $contents = from_json($response->{content});
+
+    return $contents->{results};
+}
+
+sub _stats {
+    my ($self, $response) = @_;
+
+    return WWW::Google::PageSpeedOnline::Stats->new($response->{pageStats});
+}
+
+sub _result {
+    my ($self, $response) = @_;
+
+    my $rules  = [];
+    my $result = $response->{formattedResults}->{ruleResults};
+    foreach my $rule (@{$result}) {
+        push @$rules, WWW::Google::PageSpeedOnline::Result::Rule->new($result->{$rule});
+    }
+
+    return WWW::Google::PageSpeedOnline::Result->new(
+        id    => $response->{id},
+        title => $response->{title},
+        score => $response->{score},
+        rules => $rules);
+}
+
+sub _advise {
+    my ($self, $response) = @_;
+
+    my $advise = [];
+    my $result = $response->{formattedResults}->{ruleResults};
+    foreach my $rule (@{$result}) {
+        next unless exists $result->{$rule}->{urlBlocks};
+
+        foreach $block (@{$result->{$rule}->{urlBlocks}}) {
+            my $header = _format($block->{header}->{format}, $block->{header}->{args});
+            my $items  = [];
+            if (exists($block->{urls}) && (scalar(@{$block->{urls}}))) {
+                foreach $url (@{$block->{urls}}) {
+                    push @$items, _format($url->{result}->{format}, $url->{result}->{args});
+                }
+            }
+            push @$advise, WWW::Google::PageSpeedOnline::Advise->new(
+                id     => $rule,
+                header => $header,
+                items  => $items);
+        }
+    }
+
+    return $advise;
+}
+
+sub _format {
+    my ($data, $args) = @_;
+
+    $data =~ s/\s+/ /g;
+    my $counter = 1;
+    foreach my $arg (@{$args}) {
+        $data =~ s/\$$counter/$arg->{value}/e;
+        $counter++;
+    }
+
+    return $data;
+}
+
 =head2 get_stats()
 
 Returns the page stats in XML format, something like below:
@@ -312,6 +414,32 @@ Returns the page id.
     $id      = $page->get_id();
 
 =cut
+
+#
+# PRIVATE METHODS
+#
+
+sub _url {
+    my ($self, $params, $values) = @_;
+
+    my $url = sprintf("%s?key=%s&prettyprint=%s", $BASE_URL, $self->prettyprint);
+
+    if (defined $params && defined $values) {
+        validate($params, $values);
+
+        foreach my $key (keys %$params) {
+            my $_key = "&$key=%" . $FIELDS->{$key}->{type};
+            if (defined $values->{$key}) {
+                $url .= sprintf($_key, $values->{$key});
+            }
+            else {
+                $url .= sprintf($_key, $self->{$key});
+            }
+        }
+    }
+
+    return $url;
+}
 
 =head1 AUTHOR
 

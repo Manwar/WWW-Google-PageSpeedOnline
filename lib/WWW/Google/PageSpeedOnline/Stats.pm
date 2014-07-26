@@ -17,10 +17,16 @@ Version 0.09
 
 =cut
 
-has host      => (is => 'ro');
-has request   => (is => 'ro');
-has response  => (is => 'ro');
-has resources => (is => 'ro');
+has totalRequestBytes       => (is => 'ro');
+has htmlResponseBytes       => (is => 'ro');
+has cssResponseBytes        => (is => 'ro');
+has imageResponseBytes      => (is => 'ro');
+has javascriptResponseBytes => (is => 'ro');
+has otherResponseBytes      => (is => 'ro');
+has numberStaticResources   => (is => 'ro');
+has numberCssResources      => (is => 'ro');
+has numberJsResources       => (is => 'ro');
+has numberResources         => (is => 'ro');
 
 =head1 AUTHOR
 
