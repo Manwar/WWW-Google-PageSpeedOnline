@@ -22,7 +22,6 @@ my $builder = Module::Build->new(
         'WWW::Google::UserAgent' => 0,
     },
     add_to_cleanup     => [ 'WWW-Google-PageSpeedOnline-*' ],
-    create_makefile_pl => 'traditional',
 );
 
 $builder->create_build_script();
