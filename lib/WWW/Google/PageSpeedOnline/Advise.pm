@@ -21,6 +21,20 @@ has id     => (is => 'ro');
 has header => (is => 'ro');
 has items  => (is => 'ro');
 
+=head1 METHODS
+
+=head2 id()
+
+Returns the advise rule id.
+
+=head2 header()
+
+Returns the advise rule header.
+
+=head2 items()
+
+Returns the reference to the list of advise rule items.
+
 =head1 AUTHOR
 
 Mohammad S Anwar, C<< <mohammad.anwar at yahoo.com> >>

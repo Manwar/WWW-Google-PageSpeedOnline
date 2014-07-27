@@ -21,6 +21,20 @@ has localizedRuleName => (is => 'ro');
 has ruleImpact        => (is => 'ro');
 has ruleScore         => (is => 'ro');
 
+=head1 METHODS
+
+=head2 localizedRuleName()
+
+Returns the result rule name.
+
+=head2 ruleImpact()
+
+Returns the result rule impact.
+
+=head2 ruleScore()
+
+Returns the result rule score.
+
 =head1 AUTHOR
 
 Mohammad S Anwar, C<< <mohammad.anwar at yahoo.com> >>

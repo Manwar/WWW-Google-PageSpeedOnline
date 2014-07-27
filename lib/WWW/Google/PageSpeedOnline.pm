@@ -145,45 +145,41 @@ or false values.You can pass param as scalar the API key, if that is the only th
 thing you would want to pass in.In case you would want to pass prettyprint switch
 then you would have to pass as hashref like:
 
-    +-------------+----------------------------------------------------------------------------------+
-    | Parameter   | Meaning                                                                          |
-    +-------------+----------+-----------------------------------------------------------------------+
-    | api_key     | API Key (required)                                                               |
-    | prettyprint | Returns the response in a human-readable format. Default value is true.          |
-    +-------------+----------------------------------------------------------------------------------+
+    +-------------+----------------------+
+    | Parameter   | Meaning              |
+    +-------------+----------+-----------+
+    | api_key     | API Key (required)   |
+    +-------------+----------------------+
 
     use strict; use warnings;
     use WWW::Google::PageSpeedOnline;
 
-    my ($api_key, $page);
-    $api_key = 'Your_API_Key';
-    $page    = WWW::Google::PageSpeedOnline->new($api_key);
-    # or
-    $page    = WWW::Google::PageSpeedOnline->new({api_key => $api_key});
-    # or
-    $page    = WWW::Google::PageSpeedOnline->new({api_key=>$api_key, prettyprint=>'true'});
+    my $api_key = 'Your_API_Key';
+    my $page    = WWW::Google::PageSpeedOnline->new({ api_key => $api_key });
 
 =head1 METHODS
 
 =head2 process()
 
+The method process() accepts URL (mandatory) parameter and optionally three other
+parameters as well namely locale, strategy and rule.
+
     +-----------+----------+-----------------------------------------------------------------------------------+
-    | Parameter | Default  | Meaning                                                                           |
+    | Parameter | Required | Meaning                                                                           |
     +-----------+----------+-----------------------------------------------------------------------------------+
-    | url       | Required | The URL of the page for which the Page Speed Online API should generate results.  |
-    | locale    | en-US    | The locale that results should be generated in.                                   |
-    | strategy  | desktop  | The strategy to use when analyzing the page. Valid values are desktop and mobile. |
-    | rule      | N/A      | The Page Speed rules to run. Can have multiple rules something like for example,  |
+    | url       | YES      | The URL of the page for which the Page Speed Online API should generate results.  |
+    | locale    | NO       | The locale that results should be generated in. Default is en_US.                 |
+    | strategy  | NO       | The strategy to use when analyzing the page. Default is desktop.                  |
+    | rule      | NO       | The Page Speed rules to run. Can have multiple rules something like for example,  |
     |           |          | ['AvoidBadRequests', 'MinifyJavaScript'] to request multiple rules.               |
     +-----------+----------+-----------------------------------------------------------------------------------+
 
     use strict; use warnings;
     use WWW::Google::PageSpeedOnline;
 
-    my ($api_key, $page);
-    $api_key = 'Your_API_Key';
-    $page    = WWW::Google::PageSpeedOnline->new($api_key);
-    $page->process({url => 'http://code.google.com/speed/page-speed/'});
+    my $api_key = 'Your_API_Key';
+    my $page    = WWW::Google::PageSpeedOnline->new({ api_key => $api_key });
+    $page->process({ url => 'http://code.google.com/speed/page-speed/' });
 
 =cut
 
@@ -206,11 +202,46 @@ sub _process {
     return from_json($response->{content});
 }
 
+=head2 stats()
+
+Returns the object L<WWW::Google::PageSpeedOnline::Stats>.
+
+    use strict; use warnings;
+    use WWW::Google::PageSpeedOnline;
+
+    my $api_key = 'Your_API_Key';
+    my $page    = WWW::Google::PageSpeedOnline->new({ api_key => $api_key });
+    $page->process({ url => 'http://code.google.com/speed/page-speed/' });
+    my $stats   = $page->stats();
+
+    print "Total Request Bytes: ", $stats->totalRequestBytes, "\n";
+    print "HTML Response Bytes: ", $sstas->htmlResponseBytes, "\n";
+
+=cut
+
 sub _stats {
     my ($self, $response) = @_;
 
     return WWW::Google::PageSpeedOnline::Stats->new($response->{pageStats});
 }
+
+=head2 result()
+
+Returns the object L<WWW::Google::PageSpeedOnline::Result>.
+
+    use strict; use warnings;
+    use WWW::Google::PageSpeedOnline;
+
+    my $api_key = 'Your_API_Key';
+    my $page    = WWW::Google::PageSpeedOnline->new({ api_key => $api_key });
+    $page->process({ url => 'http://code.google.com/speed/page-speed/' });
+    my $result  = $page->result();
+
+    print "Id: ", $result->id, "\n";
+    print "Titile: ", $result->title, "\n";
+    print "Score: ", $result->score, "\n";
+
+=cut
 
 sub _result {
     my ($self, $response) = @_;
@@ -227,6 +258,24 @@ sub _result {
         score => $response->{score},
         rules => $rules);
 }
+
+=head2 advise()
+
+Returns reference to the list of the objects L<WWW::Google::PageSpeedOnline::Advise>.
+
+    use strict; use warnings;
+    use WWW::Google::PageSpeedOnline;
+
+    my $api_key = 'Your_API_Key';
+    my $page    = WWW::Google::PageSpeedOnline->new({ api_key => $api_key });
+    $page->process({ url => 'http://code.google.com/speed/page-speed/' });
+    my $advise  = $page->advise();
+
+    foreach (@$advise) {
+       print "Id: ", $_->id, ", Header: ", $_->header, "\n";
+    }
+
+=cut
 
 sub _advise {
     my ($self, $response) = @_;
@@ -254,166 +303,6 @@ sub _advise {
     return $advise;
 }
 
-sub _format {
-    my ($data, $args) = @_;
-
-    $data =~ s/\s+/ /g;
-    my $counter = 1;
-    foreach my $arg (@{$args}) {
-        $data =~ s/\$$counter/$arg->{value}/e;
-        $counter++;
-    }
-
-    return $data;
-}
-
-=head2 get_stats()
-
-Returns the page stats in XML format, something like below:
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <PageStats>
-        <Hosts unit="number">7</Hosts>
-        <Request unit="bytes">2711</Request>
-        <Response unit="bytes">
-                <HTML>92198</HTML>
-                <CSS>37683</CSS>
-                <Image>13906</Image>
-                <Javascript>247174</Javascript>
-                <Other>8802</Other>
-        </Response>
-        <Resources unit="number">
-                <Static>16</Static>
-                <CSS>2</CSS>
-                <Javascript>6</Javascript>
-                <Resource>22</Resource>
-        </Resources>
-    </PageStats>
-
-    use strict; use warnings;
-    use WWW::Google::PageSpeedOnline;
-
-    my ($api_key, $page, $stats);
-    $api_key = 'Your_API_Key';
-    $page    = WWW::Google::PageSpeedOnline->new($api_key);
-    $page->process({url => 'http://code.google.com/speed/page-speed/'});
-    $stats   = $page->get_stats();
-
-=cut
-
-=head2 get_result()
-
-Returns the page result in XML format, like below:
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <PageResults>
-        <Rule name="Avoid CSS @import" impact="0" score="100"/>
-        <Rule name="Inline Small JavaScript" impact="0" score="100"/>
-        <Rule name="Specify a character set" impact="0" score="100"/>
-        <Rule name="Specify a cache validator" impact="1" score="75"/>
-        <Rule name="Specify image dimensions" impact="0" score="100"/>
-        <Rule name="Make landing page redirects cacheable" impact="0" score="100"/>
-        ....
-        ....
-        ....
-    </PageResults>
-
-    use strict; use warnings;
-    use WWW::Google::PageSpeedOnline;
-
-    my ($api_key, $page, $result);
-    $api_key = 'Your_API_Key';
-    $page    = WWW::Google::PageSpeedOnline->new($api_key);
-    $page->process({url => 'http://code.google.com/speed/page-speed/'});
-    $result  = $page->get_result();
-
-=cut
-
-=head2 get_advise()
-
-Returns the page advise in XML format, like below:
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <PageAdvise>
-        <Rule id="DeferParsingJavaScript">
-                <Header>232.9KiB of JavaScript is parsed during initial page load. Defer parsing JavaScript to reduce blocking of page rendering.</Header>
-                <Items>
-                        <Item>http://code.google.com/js/codesite_head.pack.04102009.js (65.4KiB)</Item>
-                        ....
-                        ....
-                        ....
-                </Items>
-        </Rule>
-        <Rule id="LeverageBrowserCaching">
-                <Header>The following cacheable resources have a short freshness lifetime. Specify an expiration at least one week in the future for the following resources:</Header>
-                <Items>
-                        <Item>http://google-code-feed-gadget.googlecode.com/svn/trunk/images/cleardot.gif (3 minutes)</Item>
-                        <Item>http://code.google.com/css/codesite.pack.04102009.css (60 minutes)</Item>
-                        ....
-                        ....
-                        ....
-        </Rule>
-        ....
-        ....
-        ....
-    </PageAdvise>
-
-    use strict; use warnings;
-    use WWW::Google::PageSpeedOnline;
-
-    my ($api_key, $page, $advise);
-    $api_key = 'Your_API_Key';
-    $page    = WWW::Google::PageSpeedOnline->new($api_key);
-    $page->process({url => 'http://code.google.com/speed/page-speed/'});
-    $advise  = $page->get_advise();
-
-=cut
-
-=head2 get_score()
-
-Returns the page score.
-
-    use strict; use warnings;
-    use WWW::Google::PageSpeedOnline;
-
-    my ($api_key, $page, $score);
-    $api_key = 'Your_API_Key';
-    $page    = WWW::Google::PageSpeedOnline->new($api_key);
-    $page->process({url => 'http://code.google.com/speed/page-speed/'});
-    $score   = $page->get_score();
-
-=cut
-
-=head2 get_title()
-
-Returns the page title.
-
-    use strict; use warnings;
-    use WWW::Google::PageSpeedOnline;
-
-    my ($api_key, $page, $title);
-    $api_key = 'Your_API_Key';
-    $page    = WWW::Google::PageSpeedOnline->new($api_key);
-    $page->process({url => 'http://code.google.com/speed/page-speed/'});
-    $title   = $page->get_title();
-
-=cut
-
-=head2 get_id()
-
-Returns the page id.
-
-    use strict; use warnings;
-    use WWW::Google::PageSpeedOnline;
-
-    my ($api_key, $page, $id);
-    $api_key = 'Your_API_Key';
-    $page    = WWW::Google::PageSpeedOnline->new($api_key);
-    $page->process({url => 'http://code.google.com/speed/page-speed/'});
-    $id      = $page->get_id();
-
-=cut
-
 #
 # PRIVATE METHODS
 #
@@ -439,6 +328,19 @@ sub _url {
     }
 
     return $url;
+}
+
+sub _format {
+    my ($data, $args) = @_;
+
+    $data =~ s/\s+/ /g;
+    my $counter = 1;
+    foreach my $arg (@{$args}) {
+        $data =~ s/\$$counter/$arg->{value}/e;
+        $counter++;
+    }
+
+    return $data;
 }
 
 =head1 AUTHOR

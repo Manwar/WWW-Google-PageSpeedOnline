@@ -28,6 +28,48 @@ has numberCssResources      => (is => 'ro');
 has numberJsResources       => (is => 'ro');
 has numberResources         => (is => 'ro');
 
+=head1 METHODS
+
+=head2 totalRequestBytes()
+
+Returns the total request bytes.
+
+=head2 htmlResponseBytes()
+
+Returns the HTML response bytes.
+
+=head2 cssResponseBytes()
+
+Returns the CSS response bytes.
+
+=head2 imageResponseBytes()
+
+Returns the image response bytes.
+
+=head2 javascriptResponseBytes()
+
+Returns the javascript response bytes.
+
+=head2 otherResponseBytes()
+
+Returns the other response bytes.
+
+=head2 numberStaticResources()
+
+Returns the number static resources.
+
+=head2 numberCssResources()
+
+Returns the number CSS resources.
+
+=head numberJsResources()
+
+Returns the number JS resources.
+
+=head2 numberResources()
+
+Returns the number resources.
+
 =head1 AUTHOR
 
 Mohammad S Anwar, C<< <mohammad.anwar at yahoo.com> >>

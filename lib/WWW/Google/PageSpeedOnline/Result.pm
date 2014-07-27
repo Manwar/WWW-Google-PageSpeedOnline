@@ -22,6 +22,24 @@ has title => (is => 'ro');
 has score => (is => 'ro');
 has rules => (is => 'ro');
 
+=head1 METHODS
+
+=head2 id()
+
+Returns the result rule id.
+
+=head2 title()
+
+Returns the result rule title.
+
+=head2 score()
+
+Returns the result rule score.
+
+=head2 rules()
+
+Returns the reference to the list of L<WWW::Google::PageSpeedOnline::Result::Rule>.
+
 =head1 AUTHOR
 
 Mohammad S Anwar, C<< <mohammad.anwar at yahoo.com> >>
