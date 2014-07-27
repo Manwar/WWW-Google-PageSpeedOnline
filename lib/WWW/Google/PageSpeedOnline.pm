@@ -10,8 +10,9 @@ use WWW::Google::UserAgent;
 use WWW::Google::DataTypes qw($TrueOrFalse);
 use WWW::Google::PageSpeedOnline::Params qw(validate $Strategy $Locale $FIELDS);
 use WWW::Google::PageSpeedOnline::Stats;
-use WWW::Google::PageSpeedOnline::Result;
 use WWW::Google::PageSpeedOnline::Advise;
+use WWW::Google::PageSpeedOnline::Result;
+use WWW::Google::PageSpeedOnline::Result::Rule;
 
 use Moo;
 use namespace::clean;
@@ -189,8 +190,7 @@ then you would have to pass as hashref like:
 sub process {
     my ($self, $values) = @_;
 
-    my $response = $self->_process($values);
-
+    my $response    = $self->_process($values);
     $self->{stats}  = $self->_stats($response);
     $self->{result} = $self->_result($response);
     $self->{advise} = $self->_advise($response);
@@ -199,12 +199,11 @@ sub process {
 sub _process {
     my ($self, $values) = @_;
 
-    my $params   = { url => 1, strategy => 0, locale => 0 };
+    my $params   = { url => 1, strategy => 0, locale => 0, rule => 0 };
     my $url      = $self->_url($params, $values);
     my $response = $self->get($url);
-    my $contents = from_json($response->{content});
 
-    return $contents->{results};
+    return from_json($response->{content});
 }
 
 sub _stats {
@@ -218,7 +217,7 @@ sub _result {
 
     my $rules  = [];
     my $result = $response->{formattedResults}->{ruleResults};
-    foreach my $rule (@{$result}) {
+    foreach my $rule (keys %{$result}) {
         push @$rules, WWW::Google::PageSpeedOnline::Result::Rule->new($result->{$rule});
     }
 
@@ -234,13 +233,13 @@ sub _advise {
 
     my $advise = [];
     my $result = $response->{formattedResults}->{ruleResults};
-    foreach my $rule (@{$result}) {
+    foreach my $rule (keys %{$result}) {
         next unless exists $result->{$rule}->{urlBlocks};
 
         foreach my $block (@{$result->{$rule}->{urlBlocks}}) {
             my $header = _format($block->{header}->{format}, $block->{header}->{args});
             my $items  = [];
-            if (exixsts($block->{urls}) && (scalar(@{$block->{urls}}))) {
+            if (exists($block->{urls}) && (scalar(@{$block->{urls}}))) {
                 foreach my $url (@{$block->{urls}}) {
                     push @$items, _format($url->{result}->{format}, $url->{result}->{args});
                 }
@@ -422,7 +421,8 @@ Returns the page id.
 sub _url {
     my ($self, $params, $values) = @_;
 
-    my $url = sprintf("%s?key=%s&prettyprint=%s", $BASE_URL, $self->prettyprint);
+    my $url = sprintf("%s?key=%s&prettyprint=%s",
+                      $BASE_URL, $self->api_key, $self->prettyprint);
 
     if (defined $params && defined $values) {
         validate($params, $values);
@@ -432,7 +432,7 @@ sub _url {
             if (defined $values->{$key}) {
                 $url .= sprintf($_key, $values->{$key});
             }
-            else {
+            elsif (exists $values->{$key}) {
                 $url .= sprintf($_key, $self->{$key});
             }
         }

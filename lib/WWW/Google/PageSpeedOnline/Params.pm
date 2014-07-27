@@ -49,26 +49,28 @@ my $LOCALES = {
     'th'    => 'Thai',                  'tr'    => 'Turkish',   'uk'    => 'Ukrainian',  'vi'    => 'Vietnamese',
 };
 
-our $Strategy = sub {
+our $Strategy = sub { return check_strategy($_[0]); };
+
+sub check_strategy {
     my ($str) = @_;
 
-    die "ERROR: Invalid data type 'strategy' found [$str]" unless check_strategy($str);
-};
+    die "ERROR: Invalid data type 'strategy' found [$str]"
+        unless exists $STRATEGIES->{lc($str)};
+}
 
-sub check_strategy { return exists $STRATEGIES->{lc($_[0])}; }
+our $Locale = sub { return check_locale($_[0]); };
 
-our $Locale = sub {
+sub check_locale {
     my ($str) = @_;
 
-    die "ERROR: Invalid data type 'locale' found [$str]" unless check_locale($str);
-};
+    die "ERROR: Invalid data type 'locale' found [$str]"
+        unless exists $LOCALES->{$str};
+}
 
-sub check_locale { return exists $LOCALES->{$_}; }
-
-sub check_str {
+sub check_url {
     my ($str) = @_;
 
-    die "ERROR: Invalid STR data type [$str]" if (defined $str && $str =~ /^\d+$/);
+    die "ERROR: Invalid data type 'url' [$str]" unless (defined $str && $str =~ /^(http(?:s)?\:\/\/[a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,6}(?:\/?|(?:\/[\w\-]+)*)(?:\/?|\/\w+\.[a-zA-Z]{2,4}(?:\?[\w]+\=[\w\-]+)?)?(?:\&[\w]+\=[\w\-]+)*)$/);
 };
 
 sub check_rule {
@@ -78,14 +80,14 @@ sub check_rule {
     die "ERROR: 'Rules' should be passed in as arrayref" unless (ref($rules) eq 'ARRAY');
 
     foreach my $rule (@$rules) {
-        die "ERROR: Invalid 'rule' found [$rule]" unless (exisis $RULES->{uc($rule)});
+        die "ERROR: Invalid 'rule' found [$rule]" unless (exists $RULES->{uc($rule)});
     }
 }
 
 our $FIELDS = {
     'strategy' => { check => sub { check_strategy(@_) }, type => 's' },
     'locale'   => { check => sub { check_locale(@_)   }, type => 's' },
-    'url'      => { check => sub { check_str(@_)      }, type => 's' },
+    'url'      => { check => sub { check_url(@_)      }, type => 's' },
     'rule'     => { check => sub { check_rule(@_)     }, type => 's' },
 };
 
@@ -95,6 +97,11 @@ sub validate {
     die "ERROR: Missing params list." unless (defined $params);
 
     die "ERROR: Parameters have to be hash ref" unless (ref($params) eq 'HASH');
+
+    foreach my $key (keys %{$params}) {
+        die "ERROR: Received invalid param: $key"
+            unless (exists $FIELDS->{$key});
+    }
 
     foreach my $key (keys %{$fields}) {
         die "ERROR: Received invalid param: $key"
