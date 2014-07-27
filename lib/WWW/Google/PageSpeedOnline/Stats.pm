@@ -62,7 +62,7 @@ Returns the number static resources.
 
 Returns the number CSS resources.
 
-=head numberJsResources()
+=head2 numberJsResources()
 
 Returns the number JS resources.
 
