@@ -8,7 +8,6 @@ lib/WWW/Google/PageSpeedOnline/Result/Rule.pm
 Makefile.PL
 MANIFEST
 MANIFEST.SKIP
-SIGNATURE
 README
 t/00-load.t
 t/01-unit-test.t

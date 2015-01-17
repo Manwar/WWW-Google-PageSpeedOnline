@@ -1,5 +1,10 @@
 Revision history for WWW-Google-PageSpeedOnline
 
+0.15    Sat Jan 17 10:30:00 2015
+        - Removed SIGNATURE file.
+        - Updated MANIFEST.SKIP file to ignore folder 'eumm/'.
+        - Updated Copyright year information.
+
 0.14    Sat Aug 30 01:25:18 2014
         - Added section "REPOSITORY" to the pod document.
         - Added key "META_MERGE" to Makefile.PL file.

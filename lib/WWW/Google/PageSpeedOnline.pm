@@ -1,6 +1,16 @@
 package WWW::Google::PageSpeedOnline;
 
-$WWW::Google::PageSpeedOnline::VERSION = '0.14';
+$WWW::Google::PageSpeedOnline::VERSION = '0.15';
+
+=head1 NAME
+
+WWW::Google::PageSpeedOnline - Interface to Google Page Speed Online API.
+
+=head1 VERSION
+
+Version 0.15
+
+=cut
 
 use 5.006;
 use JSON;
@@ -17,16 +27,6 @@ use WWW::Google::PageSpeedOnline::Result::Rule;
 use Moo;
 use namespace::clean;
 extends 'WWW::Google::UserAgent';
-
-=head1 NAME
-
-WWW::Google::PageSpeedOnline - Interface to Google Page Speed Online API.
-
-=head1 VERSION
-
-Version 0.14
-
-=cut
 
 has prettyprint => (is => 'ro', isa => $TrueOrFalse, default => sub { return 'true'    });
 has strategy    => (is => 'ro', isa => $Strategy,    default => sub { return 'desktop' });
@@ -388,7 +388,7 @@ L<http://search.cpan.org/dist/WWW-Google-PageSpeedOnline/>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2011 - 2014 Mohammad S Anwar.
+Copyright (C) 2011 - 2015 Mohammad S Anwar.
 
 This  program  is  free software; you can redistribute it and/or modify it under
 the  terms  of the the Artistic License (2.0). You may obtain a copy of the full

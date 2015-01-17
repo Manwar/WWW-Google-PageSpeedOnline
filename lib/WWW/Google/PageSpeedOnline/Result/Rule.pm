@@ -1,21 +1,20 @@
 package WWW::Google::PageSpeedOnline::Result::Rule;
 
-$WWW::Google::PageSpeedOnline::Result::Rule::VERSION = '0.14';
-
-use 5.006;
-
-use Moo;
-use namespace::clean;
+$WWW::Google::PageSpeedOnline::Result::Rule::VERSION = '0.15';
 
 =head1 NAME
 
-WWW::Google::PageSpeedOnline::Result::Rule - Placeholder for the result rule of WWW::Google::PageSpeedOnline
+WWW::Google::PageSpeedOnline::Result::Rule - Placeholder for the result rule of L<WWW::Google::PageSpeedOnline>.
 
 =head1 VERSION
 
-Version 0.14
+Version 0.15
 
 =cut
+
+use 5.006;
+use Moo;
+use namespace::clean;
 
 has localizedRuleName => (is => 'ro');
 has ruleImpact        => (is => 'ro');
@@ -80,7 +79,7 @@ L<http://search.cpan.org/dist/WWW-Google-PageSpeedOnline/>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2011 - 2014 Mohammad S Anwar.
+Copyright (C) 2011 - 2015 Mohammad S Anwar.
 
 This  program  is  free software; you can redistribute it and/or modify it under
 the  terms  of the the Artistic License (2.0). You may obtain a copy of the full

@@ -1,6 +1,16 @@
 package WWW::Google::PageSpeedOnline::Params;
 
-$WWW::Google::PageSpeedOnline::Params::VERSION = '0.14';
+$WWW::Google::PageSpeedOnline::Params::VERSION = '0.15';
+
+=head1 NAME
+
+WWW::Google::PageSpeedOnline::Params - Placeholder for parameters for L<WWW::Google::PageSpeedOnline>.
+
+=head1 VERSION
+
+Version 0.15
+
+=cut
 
 use 5.006;
 use strict; use warnings;
@@ -11,16 +21,6 @@ use vars qw(@ISA @EXPORT @EXPORT_OK);
 require Exporter;
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(validate $Strategy $Locale $FIELDS);
-
-=head1 NAME
-
-WWW::Google::PageSpeedOnline::Params - Placeholder for parameters for WWW::Google::PageSpeedOnline
-
-=head1 VERSION
-
-Version 0.14
-
-=cut
 
 my $STRATEGIES = { desktop => 1, mobile => 1 };
 
@@ -163,7 +163,7 @@ L<http://search.cpan.org/dist/WWW-Google-PageSpeedOnline/>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2011 - 2014 Mohammad S Anwar.
+Copyright (C) 2011 - 2015 Mohammad S Anwar.
 
 This  program  is  free software; you can redistribute it and/or modify it under
 the  terms  of the the Artistic License (2.0). You may obtain a copy of the full

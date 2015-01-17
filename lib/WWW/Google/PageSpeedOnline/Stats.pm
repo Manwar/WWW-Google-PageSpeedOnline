@@ -1,21 +1,20 @@
 package WWW::Google::PageSpeedOnline::Stats;
 
-$WWW::Google::PageSpeedOnline::Stats::VERSION = '0.14';
-
-use 5.006;
-
-use Moo;
-use namespace::clean;
+$WWW::Google::PageSpeedOnline::Stats::VERSION = '0.15';
 
 =head1 NAME
 
-WWW::Google::PageSpeedOnline::Stats - Placeholder for the stat of WWW::Google::PageSpeedOnline
+WWW::Google::PageSpeedOnline::Stats - Placeholder for the stat of L<WWW::Google::PageSpeedOnline>.
 
 =head1 VERSION
 
-Version 0.14
+Version 0.15
 
 =cut
+
+use 5.006;
+use Moo;
+use namespace::clean;
 
 has totalRequestBytes       => (is => 'ro');
 has htmlResponseBytes       => (is => 'ro');
@@ -115,7 +114,7 @@ L<http://search.cpan.org/dist/WWW-Google-PageSpeedOnline/>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2011 - 2014 Mohammad S Anwar.
+Copyright (C) 2011 - 2015 Mohammad S Anwar.
 
 This  program  is  free software; you can redistribute it and/or modify it under
 the  terms  of the the Artistic License (2.0). You may obtain a copy of the full
