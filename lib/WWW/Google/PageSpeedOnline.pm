@@ -1,6 +1,6 @@
 package WWW::Google::PageSpeedOnline;
 
-$WWW::Google::PageSpeedOnline::VERSION = '0.15';
+$WWW::Google::PageSpeedOnline::VERSION = '0.16';
 
 =head1 NAME
 
@@ -8,7 +8,7 @@ WWW::Google::PageSpeedOnline - Interface to Google Page Speed Online API.
 
 =head1 VERSION
 
-Version 0.15
+Version 0.16
 
 =cut
 
@@ -17,8 +17,8 @@ use JSON;
 use Data::Dumper;
 
 use WWW::Google::UserAgent;
-use WWW::Google::UserAgent::DataTypes qw($TrueOrFalse);
-use WWW::Google::PageSpeedOnline::Params qw(validate $Strategy $Locale $FIELDS);
+use WWW::Google::UserAgent::DataTypes -all;
+use WWW::Google::PageSpeedOnline::Params qw(validate $FIELDS);
 use WWW::Google::PageSpeedOnline::Stats;
 use WWW::Google::PageSpeedOnline::Advise;
 use WWW::Google::PageSpeedOnline::Result;
@@ -28,9 +28,9 @@ use Moo;
 use namespace::clean;
 extends 'WWW::Google::UserAgent';
 
-has prettyprint => (is => 'ro', isa => $TrueOrFalse, default => sub { return 'true'    });
-has strategy    => (is => 'ro', isa => $Strategy,    default => sub { return 'desktop' });
-has locale      => (is => 'ro', isa => $Locale,      default => sub { return 'en_US'   });
+has prettyprint => (is => 'ro', isa => TrueFalse, default => sub { 'true'    });
+has strategy    => (is => 'ro', isa => Strategy,  default => sub { 'desktop' });
+has locale      => (is => 'ro', isa => Locale,    default => sub { 'en_US'   });
 
 has stats       => (is => 'rw');
 has result      => (is => 'rw');

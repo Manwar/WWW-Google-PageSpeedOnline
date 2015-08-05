@@ -1,6 +1,6 @@
 package WWW::Google::PageSpeedOnline::Params;
 
-$WWW::Google::PageSpeedOnline::Params::VERSION = '0.15';
+$WWW::Google::PageSpeedOnline::Params::VERSION = '0.16';
 
 =head1 NAME
 
@@ -8,7 +8,7 @@ WWW::Google::PageSpeedOnline::Params - Placeholder for parameters for L<WWW::Goo
 
 =head1 VERSION
 
-Version 0.15
+Version 0.16
 
 =cut
 
@@ -20,7 +20,7 @@ use vars qw(@ISA @EXPORT @EXPORT_OK);
 
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(validate $Strategy $Locale $FIELDS);
+@EXPORT_OK = qw(validate $FIELDS);
 
 my $STRATEGIES = { desktop => 1, mobile => 1 };
 
@@ -49,16 +49,12 @@ my $LOCALES = {
     'th'    => 'Thai',                  'tr'    => 'Turkish',   'uk'    => 'Ukrainian',  'vi'    => 'Vietnamese',
 };
 
-our $Strategy = sub { return check_strategy($_[0]); };
-
 sub check_strategy {
     my ($str) = @_;
 
     die "ERROR: Invalid data type 'strategy' found [$str]"
         unless exists $STRATEGIES->{lc($str)};
 }
-
-our $Locale = sub { return check_locale($_[0]); };
 
 sub check_locale {
     my ($str) = @_;
