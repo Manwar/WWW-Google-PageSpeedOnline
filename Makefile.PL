@@ -21,7 +21,7 @@ WriteMakefile(
         'Moo'                    => '2.000000',
         'namespace::clean'       => '0.24',
         'JSON'                   => '2.53',
-        'WWW::Google::UserAgent' => '0.17',
+        'WWW::Google::UserAgent' => '0.18',
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES => 'WWW-Google-PageSpeedOnline-*' },

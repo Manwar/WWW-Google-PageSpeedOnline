@@ -1,6 +1,6 @@
 package WWW::Google::PageSpeedOnline::Stats;
 
-$WWW::Google::PageSpeedOnline::Stats::VERSION = '0.16';
+$WWW::Google::PageSpeedOnline::Stats::VERSION = '0.17';
 
 =head1 NAME
 
@@ -8,7 +8,7 @@ WWW::Google::PageSpeedOnline::Stats - Placeholder for the stat of L<WWW::Google:
 
 =head1 VERSION
 
-Version 0.16
+Version 0.17
 
 =cut
 

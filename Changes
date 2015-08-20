@@ -1,7 +1,10 @@
 Revision history for WWW-Google-PageSpeedOnline
 
+0.17    Thu Aug 20 11:00:00 2015
+        - Upgraded to use WWW::Google::UserAgent v0.18.
+
 0.16    Sat Aug 08 12:00:00 2015
-        - Upgraded to use WWW::Google::UserAgent v0.17
+        - Upgraded to use WWW::Google::UserAgent v0.17.
 
 0.15    Sat Jan 17 10:30:00 2015
         - Removed SIGNATURE file.
