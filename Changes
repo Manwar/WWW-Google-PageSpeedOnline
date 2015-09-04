@@ -1,5 +1,8 @@
 Revision history for WWW-Google-PageSpeedOnline
 
+0.18    Fri Sep 04 10:05:00 2015
+        - Added support for Google PageSpeedOnline API v2.0.
+
 0.17    Thu Aug 20 11:00:00 2015
         - Upgraded to use WWW::Google::UserAgent v0.18.
 

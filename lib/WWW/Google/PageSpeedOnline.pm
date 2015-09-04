@@ -1,6 +1,6 @@
 package WWW::Google::PageSpeedOnline;
 
-$WWW::Google::PageSpeedOnline::VERSION = '0.17';
+$WWW::Google::PageSpeedOnline::VERSION = '0.18';
 
 =head1 NAME
 
@@ -8,7 +8,7 @@ WWW::Google::PageSpeedOnline - Interface to Google Page Speed Online API.
 
 =head1 VERSION
 
-Version 0.17
+Version 0.18
 
 =cut
 
@@ -36,14 +36,14 @@ has stats       => (is => 'rw');
 has result      => (is => 'rw');
 has advise      => (is => 'rw');
 
-our $BASE_URL   = 'https://www.googleapis.com/pagespeedonline/v1/runPagespeed';
+our $BASE_URL   = 'https://www.googleapis.com/pagespeedonline/v2/runPagespeed';
 
 =head1 DESCRIPTION
 
 Google Page  Speed  is  a tool that helps developers optimize their web pages  by
 analyzing the pages and generating tailored suggestions to make the pages faster.
 You  can  use  the  Page Speed Online API to programmatically generate Page Speed
-scores and suggestions.  Currently it  supports version v1. Courtesy limit is 250
+scores and suggestions.  Currently it  supports version v2. Courtesy limit is 250
 queries per day.
 
 IMPORTANT: The  version v1 of the Google Page Speed Online API is in Labs and its
