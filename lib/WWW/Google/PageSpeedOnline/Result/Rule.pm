@@ -1,6 +1,6 @@
 package WWW::Google::PageSpeedOnline::Result::Rule;
 
-$WWW::Google::PageSpeedOnline::Result::Rule::VERSION = '0.18';
+$WWW::Google::PageSpeedOnline::Result::Rule::VERSION = '0.19';
 
 =head1 NAME
 
@@ -8,7 +8,7 @@ WWW::Google::PageSpeedOnline::Result::Rule - Placeholder for the result rule of 
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =cut
 

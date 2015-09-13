@@ -1,6 +1,6 @@
 package WWW::Google::PageSpeedOnline;
 
-$WWW::Google::PageSpeedOnline::VERSION = '0.18';
+$WWW::Google::PageSpeedOnline::VERSION = '0.19';
 
 =head1 NAME
 
@@ -8,7 +8,7 @@ WWW::Google::PageSpeedOnline - Interface to Google Page Speed Online API.
 
 =head1 VERSION
 
-Version 0.18
+Version 0.19
 
 =cut
 
@@ -48,6 +48,8 @@ queries per day.
 
 IMPORTANT: The  version v1 of the Google Page Speed Online API is in Labs and its
 features might change unexpectedly until it graduates.
+
+The official Google API document can be found L<here|https://developers.google.com/speed/docs/insights/v2/reference/>.
 
 =head1 STRATEGIES
 
