@@ -15,13 +15,13 @@ WriteMakefile(
         'ExtUtils::MakeMaker' => 0,
     },
     BUILD_REQUIRES   => {
-        'Test::More' => 0,
+        'Test::More' => '1.001014',
     },
     PREREQ_PM => {
         'Moo'                    => '2.000000',
         'namespace::clean'       => '0.24',
         'JSON'                   => '2.53',
-        'WWW::Google::UserAgent' => '0.18',
+        'WWW::Google::UserAgent' => '0.20',
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES => 'WWW-Google-PageSpeedOnline-*' },

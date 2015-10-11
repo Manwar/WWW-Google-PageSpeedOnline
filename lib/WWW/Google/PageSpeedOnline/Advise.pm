@@ -1,6 +1,6 @@
 package WWW::Google::PageSpeedOnline::Advise;
 
-$WWW::Google::PageSpeedOnline::Advise::VERSION = '0.19';
+$WWW::Google::PageSpeedOnline::Advise::VERSION = '0.20';
 
 =head1 NAME
 
@@ -8,7 +8,7 @@ WWW::Google::PageSpeedOnline::Advise - Placeholder for the advise of L<WWW::Goog
 
 =head1 VERSION
 
-Version 0.19
+Version 0.20
 
 =cut
 

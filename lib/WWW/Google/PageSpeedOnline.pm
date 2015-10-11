@@ -1,6 +1,6 @@
 package WWW::Google::PageSpeedOnline;
 
-$WWW::Google::PageSpeedOnline::VERSION = '0.19';
+$WWW::Google::PageSpeedOnline::VERSION = '0.20';
 
 =head1 NAME
 
@@ -8,7 +8,7 @@ WWW::Google::PageSpeedOnline - Interface to Google Page Speed Online API.
 
 =head1 VERSION
 
-Version 0.19
+Version 0.20
 
 =cut
 
