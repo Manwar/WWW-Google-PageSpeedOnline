@@ -1,6 +1,6 @@
 package WWW::Google::PageSpeedOnline::Result;
 
-$WWW::Google::PageSpeedOnline::Result::VERSION = '0.20';
+$WWW::Google::PageSpeedOnline::Result::VERSION = '0.21';
 
 =head1 NAME
 
@@ -8,7 +8,7 @@ WWW::Google::PageSpeedOnline::Result - Placeholder for the result of L<WWW::Goog
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =cut
 

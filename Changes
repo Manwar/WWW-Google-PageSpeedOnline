@@ -1,5 +1,8 @@
 Revision history for WWW-Google-PageSpeedOnline
 
+0.21    Tue Nov 17 10:50:00 2015
+        - Added LICENSE file.
+
 0.20    Sun Oct 11 11:25:00 2015
         - Upgraded to use WWW::Google::UserAgent v0.20.
 
